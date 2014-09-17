@@ -18,6 +18,8 @@ sudo -u postgres createuser vagrant --superuser
 echo "DONE!"
 echo "Ready to install Odoo !"
 
+export HOME=/home/vagrant/
+
 cd /home/vagrant/odoo
 $AS_VAGRANT mkdir instance-70
 $AS_VAGRANT mkdir instance-80
