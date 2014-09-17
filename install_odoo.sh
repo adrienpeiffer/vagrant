@@ -57,7 +57,7 @@ then
    sudo touch /etc/init/odoo-server-70.conf
    echo "setuid vagrant" | sudo tee /etc/init/odoo-server-70.conf
    echo "setgid vagrant" | sudo tee -a /etc/init/odoo-server-70.conf
-   echo "exec /home/vagrant/instance-70/bin/start_openerp --proxy-mode" | sudo tee -a /etc/init/odoo-server-70.conf
+   echo "exec /home/vagrant/odoo/instance-70/bin/start_openerp --proxy-mode" | sudo tee -a /etc/init/odoo-server-70.conf
    sudo ln -s /lib/init/upstart-job /etc/init.d/odoo-server-70
    sudo service odoo-server-70 start
 fi
@@ -66,7 +66,7 @@ then
    sudo touch /etc/init/odoo-server-80.conf
    echo "setuid vagrant" | sudo tee /etc/init/odoo-server-80.conf
    echo "setgid vagrant" | sudo tee -a /etc/init/odoo-server-80.conf
-   echo "exec /home/vagrant/instance-80/bin/start_openerp --proxy-mode" | sudo tee -a /etc/init/odoo-server-80.conf
+   echo "exec /home/vagrant/odoo/instance-80/bin/start_openerp --proxy-mode" | sudo tee -a /etc/init/odoo-server-80.conf
    sudo ln -s /lib/init/upstart-job /etc/init.d/odoo-server-80
    sudo service odoo-server-80 start
 fi
