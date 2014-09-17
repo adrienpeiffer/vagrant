@@ -2,6 +2,8 @@
 
 # usage: ./install_plone.sh
 
+$AS_VAGRANT = sudo -u vagrant
+
 sudo apt-get install -y git-core
 sudo apt-get install -y python-pip
 sudo apt-get install -y python-dev
@@ -15,26 +17,26 @@ sudo -u postgres createuser vagrant --superuser
 
 if [ ! `which virtualenv` ]; then
 	echo "Installing virtualenv..."
-	pip install virtualenv
+	$AS_VAGRANT pip install virtualenv
 fi
 
 echo "DONE!"
 echo "Ready to install Odoo !"
 
 cd /home/vagrant/odoo
-mkdir instance-70
-ln -s buildout-70.cfg/ instance-70/buildout.cfg
-mkdir instance-80
-ln -s buildout-80.cfg/ instance-80/buildout.cfg
+$AS_VAGRANT mkdir instance-70
+$AS_VAGRANT ln -s buildout-70.cfg/ instance-70/buildout.cfg
+$AS_VAGRANT mkdir instance-80
+$AS_VAGRANT ln -s buildout-80.cfg/ instance-80/buildout.cfg
 
-virtualenv instance-70
-./instance-70/bin/pip install zc.buildout
-virtualenv instance-80
-./instance-80/bin/pip install zc.buildout
+$AS_VAGRANT virtualenv instance-70
+$AS_VAGRANT ./instance-70/bin/pip install zc.buildout
+$AS_VAGRANT virtualenv instance-80
+$AS_VAGRANT ./instance-80/bin/pip install zc.buildout
 
 CWD=`pwd`
 cd instance-70
-./bin/buildout -vvv
+$AS_VAGRANT ./bin/buildout -vvv
 cd $CWD
 if [ ! -f ./instance-70/bin/start_openerp ] 
 then
@@ -42,7 +44,7 @@ then
 	exit 1
 fi
 cd instance-80
-./bin/buildout -vvv
+$AS_VAGRANT ./bin/buildout -vvv
 cd $CWD
 if [ ! -f ./instance-80/bin/start_openerp ] 
 then
