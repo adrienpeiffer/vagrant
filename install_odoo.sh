@@ -2,7 +2,7 @@
 
 # usage: ./install_plone.sh
 
-$AS_VAGRANT = sudo -u vagrant
+$AS_VAGRANT=sudo -u vagrant
 
 sudo apt-get install -y git-core
 sudo apt-get install -y python-pip
