@@ -12,22 +12,22 @@ sudo apt-get install -y postgresql
 sudo apt-get install -y python-psycopg2
 sudo apt-get install -y libpq-dev
 sudo apt-get install -y libldap2-dev libsasl2-dev libssl-dev
-
+sudo apt-get install python-virtualenv
 sudo -u postgres createuser vagrant --superuser
-
-if [ ! `which virtualenv` ]; then
-	echo "Installing virtualenv..."
-	$AS_VAGRANT pip install virtualenv
-fi
 
 echo "DONE!"
 echo "Ready to install Odoo !"
 
 cd /home/vagrant/odoo
 $AS_VAGRANT mkdir instance-70
-$AS_VAGRANT ln -s buildout-70.cfg/ instance-70/buildout.cfg
 $AS_VAGRANT mkdir instance-80
-$AS_VAGRANT ln -s buildout-80.cfg/ instance-80/buildout.cfg
+CWD=`pwd`
+cd ./instance-70
+$AS_VAGRANT ln -s ../buildout-70.cfg buildout.cfg
+cd $CWD
+cd ./instance-80
+$AS_VAGRANT ln -s ../buildout-80.cfg buildout.cfg
+cd $CWD
 
 $AS_VAGRANT virtualenv instance-70
 $AS_VAGRANT ./instance-70/bin/pip install zc.buildout
@@ -55,21 +55,23 @@ fi
 if [ ! -f /etc/init/odoo-server-70.conf ] 
 then 
    sudo touch /etc/init/odoo-server-70.conf
+   sudo ln -s /lib/init/upstart-job /etc/init.d/odoo-server-70
 fi
 if [ ! -f /etc/init/odoo-server-80.conf ] 
 then 
    sudo touch /etc/init/odoo-server-80.conf
+   sudo ln -s /lib/init/upstart-job /etc/init.d/odoo-server-80
 fi
 echo "setuid vagrant" | sudo tee /etc/init/odoo-server-70.conf
 echo "setgid vagrant" | sudo tee -a /etc/init/odoo-server-70.conf
-echo "exec /home/vagrant/instance/bin/start_openerp --proxy-mode" | sudo tee -a /etc/init/odoo-server-70.conf
+echo "exec /home/vagrant/instance-70/bin/start_openerp --proxy-mode" | sudo tee -a /etc/init/odoo-server-70.conf
 
 sudo ln -s /lib/init/upstart-job /etc/init.d/odoo-server-70
 sudo service odoo-server-70 start
 
 echo "setuid vagrant" | sudo tee /etc/init/odoo-server-80.conf
 echo "setgid vagrant" | sudo tee -a /etc/init/odoo-server-80.conf
-echo "exec /home/vagrant/instance/bin/start_openerp --proxy-mode" | sudo tee -a /etc/init/odoo-server-80.conf
+echo "exec /home/vagrant/instance-80/bin/start_openerp --proxy-mode" | sudo tee -a /etc/init/odoo-server-80.conf
 
 sudo ln -s /lib/init/upstart-job /etc/init.d/odoo-server-80
 sudo service odoo-server-80 start
