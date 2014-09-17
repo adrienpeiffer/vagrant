@@ -86,8 +86,8 @@ fi
 sudo touch /etc/init/odoo-server-80.conf
 echo "setuid vagrant" | sudo tee /etc/init/odoo-server-80.conf
 echo "setgid vagrant" | sudo tee -a /etc/init/odoo-server-80.conf
-echo "start on started-postgresql" | sudo tee -a /etc/init/odoo-server-80.conf
-echo "stop on stopping-postgresql" | sudo tee -a /etc/init/odoo-server-80.conf
+echo "start on filesystem or runlevel[45]" | sudo tee -a /etc/init/odoo-server-80.conf
+echo "stop on runlevel[!45]" | sudo tee -a /etc/init/odoo-server-80.conf
 echo "exec /home/vagrant/odoo/instance-80/bin/start_openerp --proxy-mode" | sudo tee -a /etc/init/odoo-server-80.conf
 sudo ln -s /lib/init/upstart-job /etc/init.d/odoo-server-80
 sudo service odoo-server-80 start
