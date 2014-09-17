@@ -6,6 +6,7 @@ Vagrant::Config.run do |config|
     config.vm.box_url = "http://cloud-images.ubuntu.com/vagrant/precise/current/precise-server-cloudimg-amd64-vagrant-disk1.box"
 
 	config.vm.forward_port 8069, 8069
+	config.vm.forward_port 8169, 8169
 
 	config.vm.provision :shell do |shell|
 	  shell.inline = "sudo apt-get install -y git-core"
@@ -28,7 +29,7 @@ Vagrant::Config.run do |config|
 	
 	config.vm.provision :shell do |shell|
 	  shell.inline = "echo $1 >> launch.sh"
-	  shell.args = %q{"if [ ! -d ./odoo ]; then sudo -u vagrant git clone https://github.com/adrienpeiffer/vagrant.git odoo;fi"}
+	  shell.args = %q{"if [ ! -d ./odoo ]; then sudo -u vagrant git clone https://github.com/adrienpeiffer/vagrant.git odoo;else cd ./odoo; git pull; cd ..;fi"}
 	end
 	
 	config.vm.provision :shell do |shell|

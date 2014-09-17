@@ -59,7 +59,7 @@ then
    sudo rm /etc/init/odoo-server-70.conf
 fi
 
-if [ ! -f /etc/init.d/odoo-server-70 ] 
+if [ ! -L /etc/init.d/odoo-server-70 ] 
 then 
    sudo rm /etc/init.d/odoo-server-70
 fi
@@ -76,7 +76,7 @@ then
    sudo rm /etc/init/odoo-server-80.conf
 fi
 
-if [ ! -f /etc/init.d/odoo-server-80 ] 
+if [ ! -L /etc/init.d/odoo-server-80 ] 
 then 
    sudo rm /etc/init.d/odoo-server-80
 fi
