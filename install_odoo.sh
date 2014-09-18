@@ -22,7 +22,9 @@ export HOME=/home/vagrant/
 
 cd /home/vagrant/odoo
 $AS_VAGRANT mkdir instance-70
+$AS_VAGRANT mkdir instance-70/log
 $AS_VAGRANT mkdir instance-80
+$AS_VAGRANT mkdir instance-80/log
 CWD=`pwd`
 cd ./instance-70
 $AS_VAGRANT ln -s ../buildout-70.cfg buildout.cfg
